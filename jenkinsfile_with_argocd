@@ -10,7 +10,7 @@ pipeline {
         stage('git checkout') {
             steps {
                 echo 'Cloning GIT HUB Repo '
-				git branch: 'main', url: 'https://github.com/devopstraininghub/mindcircuit14.git'
+				git branch: 'main', url: 'https://github.com/ranjireddy041/mindcircuit14.git'
             }  
         }
 		
@@ -36,27 +36,22 @@ pipeline {
         stage('Docker Image') {
             steps {
                 echo 'Docker Image'
-				sh 'docker build -t devopshubg333/batch14:${BUILD_NUMBER} -f Dockerfile .'
+				sh 'docker build -t ranjidokcerhub/devopsrepo:${BUILD_NUMBER} -f Dockerfile .'
             }
         }
 		
 		
-		 stage('Docker Image Scan') {
-            steps {
-                echo 'Docker Image scan'
-				sh "trivy image --format json --output results.json devopshubg333/batch14:${BUILD_NUMBER}"
-            }
-        }
+	
 		
         stage('Push to Dockerhub') {
             steps {
 			 script {
 			withCredentials([string(credentialsId: 'dockerhub', variable: 'dockerhub')]) {
 			
-            sh 'docker login -u devopshubg333 -p ${dockerhub}'
+            sh 'docker login -u ranjidokcerhub -p ${dockerhub}'
 			
 			 }
-			   sh 'docker push devopshubg333/batch14:${BUILD_NUMBER}'
+			   sh 'docker push ranjidokcerhub/devopsrepo:${BUILD_NUMBER}'
 			   
                 echo 'Pushed to Dockerhub'
 				}
@@ -69,7 +64,7 @@ pipeline {
 		
 		 environment {
             GIT_REPO_NAME = "mindcircuit14"
-            GIT_USER_NAME = "devopstraininghub"
+            GIT_USER_NAME = "ranjireddy041"
         }
 		
             steps {
@@ -77,10 +72,10 @@ pipeline {
 				withCredentials([string(credentialsId: 'githubtoken', variable: 'githubtoken')]) 
 				{
                   sh '''
-                    git config user.email "gorekarmadhu@gmail.com"
-                    git config user.name "Madhu"
+                    git config user.email "ranjiredd@gmail.com"
+                    git config user.name "ranji"
                     BUILD_NUMBER=${BUILD_NUMBER}
-					sed -i "s/batch14:.*/batch14:${BUILD_NUMBER}/g" deploymentfiles/deployment.yml
+			sed -i "s/devopsrepo:.*/devopsrepo:${BUILD_NUMBER}/g" deploymentfiles/deployment.yml
                     git add .
                     
                     git commit -m "Update deployment image to version ${BUILD_NUMBER}"
