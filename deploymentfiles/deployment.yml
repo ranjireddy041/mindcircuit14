@@ -9,7 +9,7 @@ spec:
   selector:
     matchLabels:
       app: facebook 
-  replicas: 2 
+  replicas: 3
   template:
     metadata:
       name: fbpod
@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: fbcont
-          image: devopshubg333/batch14:5
+          image: ranjidokcerhub/devopsrepo:xyz
           ports:
             - containerPort: 8080
 
