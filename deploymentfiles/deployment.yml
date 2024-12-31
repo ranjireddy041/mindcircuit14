@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: fbcont
-          image: ranjidokcerhub/devopsrepo:xyz
+          image: ranjidokcerhub/devopsrepo:13
           ports:
             - containerPort: 8080
 
