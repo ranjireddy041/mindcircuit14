@@ -21,8 +21,8 @@ jobs:
         run: |
               WAR_FILE=$(ls target/*.war | head -n 1)
               APP_NAME=mcapp
-              curl -u "${{ secrets.TOMCAT_HOST }}:{{ secrets.TOMCAT_PASSWORD }}" \
+              curl -u "${{ secrets.TOMCAT_USERNAME }}:{{ secrets.TOMCAT_PASSWORD }}" \
                 --upload-file "$WAR_FILE" \
-                "http://${{ secrets.TOMCAT_USERNAME}}:8081/manager/text/deploy?path=/$APP_NAME&update=true"
+                "http://${{ secrets.TOMCAT_HOST}}:8081/manager/text/deploy?path=/$APP_NAME&update=true"
  
       
