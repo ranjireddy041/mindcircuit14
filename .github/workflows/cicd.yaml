@@ -19,6 +19,9 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '21'
+      - name: install maven 
+        run: |
+            yum install maven -y
 
       - name: build war using maven
         run: mvn clean package
