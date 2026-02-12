@@ -1,0 +1,28 @@
+name: deploy to tomcat
+
+on:
+  push:
+    branches:
+      - main
+    workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v4
+
+      - name: build war using maven
+        run: mvn clean package
+
+      - name: deploy to tomcat server
+        run: |
+              WAR_FILE=$(ls target/*.war | head -n 1)
+              APP_NAME=mcapp
+              curl -u "${{ secrets.tomcat_username }}:{{ secrets.tomcat_password }}" \
+                --upload-file "$WAR_FILE" \
+                "http://${{ secrets.tomcat}}:8081/manager/text/deploy?path=/$APP_NAME&update=true"
+ 
+      -
